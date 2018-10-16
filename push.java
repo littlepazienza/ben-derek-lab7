@@ -1,9 +1,12 @@
+import java.lang.Math;
 
 abstract class ExpressionTree 
 {
-	abstract protected  String operation;
+  protected  String operation;
   public abstract int evaluate();
-	public abstract boolean canEvaluate();
+  public abstract String preOrder();
+  public abstract String inOrder();
+  public abstract String postOrder();
 }
 
 class Number extends ExpressionTree
@@ -11,90 +14,223 @@ class Number extends ExpressionTree
   protected int value;
 
   public Number(int v) { value = v; } 
-  public int evaluate() { return value; } 
+  public int evaluate() { return value; }
+  public String preOrder(){ return " " + value;}
+  public String inOrder(){ return " " + value;}
+  public String postOrder(){ return " " + value;}
   
 }
 
 class Plus extends ExpressionTree
 {
-	operation = "+";
-
 	protected ExpressionTree left, right;
-	
+
 	public Plus(ExpressionTree l, ExpressionTree r)
 	{
+		operation = "+";
 		left =l;
 		right = r;
 	}
 
 	public int evaluate()
 	{
-		return left + right;
+		return left.evaluate() + right.evaluate();
 	}
+
+	public String preOrder()
+	{
+		return operation + left.preOrder() + right.preOrder();
+	}
+	
+	public String inOrder()
+	{
+		return "(" + left.inOrder() + operation + right.inOrder() + ")";
+	}
+	public String postOrder()
+        {
+                return left.postOrder() + right.postOrder() + operation;
+        }
+
 }
 
 class Minus extends ExpressionTree
 {
-	operation = "-";
 
 	protected ExpressionTree left, right;
 	
 	public Minus(ExpressionTree l, ExpressionTree r)
 	{
+		operation = "-";
 		left = l;
 		right = r;
 	}
 
 	public int evaluate()
 	{
-		return left - right;
+		return left.evaluate() - right.evaluate();
 	}
 
+	public String preOrder()
+        {
+                return operation + left.preOrder() + right.preOrder();
+        }
+
+        public String inOrder()
+        {
+                return "(" + left.inOrder() + operation + right.inOrder() + ")";
+        }
+        public String postOrder()
+        {
+                return left.postOrder() + right.postOrder() + operation;
+        }
 }
 
 class Times extends ExpressionTree
 {
-	operation = "*";
 
 	protected ExpressionTree left, right;
 	
 	public Times(ExpressionTree l, ExpressionTree r)
 	{
+		operation = "*";
 		left = l;
 		right = r;
 	}
 
 	public int evaluate()
 	{
-		return left * right;
+		return left.evaluate() * right.evaluate();
 	}
+	
+	public String preOrder()
+        {
+                return operation + left.preOrder() + right.preOrder();
+        }
+
+        public String inOrder()
+        {
+                return "(" + left.inOrder() + operation + right.inOrder() + ")";
+        }
+        public String postOrder()
+        {
+                return left.postOrder() + right.postOrder() + operation;
+        }
 
 }
 
 class Divide extends ExpressionTree
 {
-	operation = "/";
 
 	protected ExpressionTree left, right;
 
 	public Divide(ExpressionTree l, ExpressionTree r)
-	{	
+	{
+		operation = "/";	
 		left = l;
 		right = r;
 	}
 
 	public int evaluate()
 	{
-		return left / right;
+		return left.evaluate() / right.evaluate();
 	}
+
+	public String preOrder()
+        {
+                return operation + left.preOrder() + right.preOrder();
+        }
+
+        public String inOrder()
+        {
+                return "(" + left.inOrder() + operation + right.inOrder() + ")";
+        }
+        public String postOrder()
+        {
+                return left.postOrder() + right.postOrder() + operation;
+        }
 
 }
 
 class Negation extends ExpressionTree
 {
-	operation = "neg";
 
-	protected ExpressionTree left, right;
+	protected ExpressionTree leaf;
+
+	public Negation(ExpressionTree l)
+	{
+	  operation = "neg";
+	  leaf = l;
+	}
+
+	public int evaluate()
+	{
+	  return -1 * leaf.evaluate();
+	}
+
+	public String preOrder()
+        {
+                return operation + leaf.preOrder();
+        }
+
+        public String inOrder()
+        {
+                return operation + "(" + leaf.inOrder() + ")";
+        }
+        public String postOrder()
+        {
+                return leaf.postOrder() + operation;
+        }
+
+}
+
+class Abs extends ExpressionTree
+{
+
+	protected ExpressionTree leaf;
+
+	public Abs(ExpressionTree l)
+	{
+	  operation = "abs";
+	  leaf = l;
+	}
+
+	public int evaluate()
+	{
+		return Math.abs(leaf.evaluate());
+	}
+
+	public String preOrder()
+        {
+                return operation + leaf.preOrder();
+        }
+
+        public String inOrder()
+        {
+                return operation + "(" + leaf.inOrder() + ")";
+        }
+        public String postOrder()
+        {
+                return leaf.postOrder() + operation;
+        }
+
+}
+
+class Driver
+{
+	public static void main(String[] args)
+	{
+		ExpressionTree e1 = new Plus(new Number(5), new Number(3));
+		ExpressionTree e2 = new Minus(new Number(7), new Number(2));
+		ExpressionTree e3 = new Times(new Number(10), new Number(2));
+		ExpressionTree e4 = new Divide(new Number(10), new Number(5));
+        	System.out.println(e1.evaluate());
+		System.out.println(e2.evaluate());
+		System.out.println(e3.evaluate());
+		System.out.println(e4.evaluate());
+	}
+
+}
+
 
 
 
