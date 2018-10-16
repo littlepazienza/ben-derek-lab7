@@ -14,59 +14,24 @@ class Number extends ExpressionTree
   public boolean canEvaluate() { return false; }
 }
 
-class Operation extends ExpressionTree
+abstract class Operation extends ExpressionTree
 {
-	protected String value;
-	protected ExpressionTree left, right
+	protected ExpressionTree left, right;
 
-	public Operation( String v, ExpressionTree l, ExpressionTree r )
+	public Operation( ExpressionTree l, ExpressionTree r )
 	{
-		value = v;
 		left = l;
 		right = r;
 	}
-
-	public int evaluate()
-	{
-		switch(value)
-		{
-			case "+":return left.evaluate() + right.evaluate();
-			case "-":return left.evaluate() - right.evaluate();
-			case "*":return left.evaluate() * right.evaluate();
-			case "/":return left.evaluate() / right.evaluate();
-			case "neg":return -1; //TODO
-			case "abs":return Math.abs(-1); //TODO
-			default: reutnr -1;
-		}
-	}
-
+	
 	public boolean canEvaluate() { return true; }
 }
 
-class Tree
+class Plus extends Operation
 {
-	protected Operation root;
-
-	public Tree()
+	public Plus(ExpressionTree l, ExpressionTree r)
 	{
-		root = null;
+		super(l, r);
 	}
-
-	public void addOperation(Operation o)
-	{
-		findSpotForOperation(root, o);
-	}
-
-	//parses through tree finds first open spot for operation and adds it
-	private boolean findSportForOperation( Operation r, Operation o)
-	{
-		if(isFull())
-			return false;
-
-			
-	}
-
-
-
 
 
