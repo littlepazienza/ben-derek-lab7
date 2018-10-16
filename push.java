@@ -15,9 +15,9 @@ class Number extends ExpressionTree
 
   public Number(int v) { value = v; } 
   public int evaluate() { return value; }
-  public String preOrder(){ return " " + value;}
-  public String inOrder(){ return " " + value;}
-  public String postOrder(){ return " " + value;}
+  public String preOrder(){ return " " + value + " ";}
+  public String inOrder(){ return " " + value + " ";}
+  public String postOrder(){ return " " + value + " ";}
   
 }
 
@@ -223,12 +223,15 @@ class Driver
 		ExpressionTree e2 = new Minus(new Number(7), new Number(2));
 		ExpressionTree e3 = new Times(new Number(10), new Number(2));
 		ExpressionTree e4 = new Divide(new Number(10), new Number(5));
-     
-		System.out.println(e1.preOrder() + e1.evaluate());
-		System.out.println(e2.inOrder() + e2.evaluate());
-		System.out.println(e3.postOrder() + e3.evaluate());
-		System.out.println(e4.preOrder() + e4.evaluate());
-	
+ 		ExpressionTree e5 = new Negation(new Number(2));
+		ExpressionTree e6 = new Abs(new Number(-5));
+    
+		System.out.println("PreOrder: " + e1.preOrder() + "= " + e1.evaluate());
+		System.out.println("InOrder: " + e2.inOrder() + " = " +  e2.evaluate());
+		System.out.println("PostOrder: " + e3.postOrder() + " = " +  e3.evaluate());
+		System.out.println("PreOrder: " + e4.preOrder() + "= " + e4.evaluate());
+		System.out.println("InOrder: " + e5.inOrder() + " = " + e5.evaluate());
+		System.out.println("PostOrder: " + e6.postOrder() + " = " + e6.evaluate());	
 	}
 
 }
