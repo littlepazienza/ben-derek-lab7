@@ -1,6 +1,7 @@
 
 abstract class ExpressionTree 
 {
+	abstract protected  String operation;
   public abstract int evaluate();
 	public abstract boolean canEvaluate();
 }
@@ -11,27 +12,90 @@ class Number extends ExpressionTree
 
   public Number(int v) { value = v; } 
   public int evaluate() { return value; } 
-  public boolean canEvaluate() { return false; }
+  
 }
 
-abstract class Operation extends ExpressionTree
+class Plus extends ExpressionTree
 {
-	protected ExpressionTree left, right;
+	operation = "+";
 
-	public Operation( ExpressionTree l, ExpressionTree r )
+	protected ExpressionTree left, right;
+	
+	public Plus(ExpressionTree l, ExpressionTree r)
+	{
+		left =l;
+		right = r;
+	}
+
+	public int evaluate()
+	{
+		return left + right;
+	}
+}
+
+class Minus extends ExpressionTree
+{
+	operation = "-";
+
+	protected ExpressionTree left, right;
+	
+	public Minus(ExpressionTree l, ExpressionTree r)
 	{
 		left = l;
 		right = r;
 	}
-	
-	public boolean canEvaluate() { return true; }
+
+	public int evaluate()
+	{
+		return left - right;
+	}
+
 }
 
-class Plus extends Operation
+class Times extends ExpressionTree
 {
-	public Plus(ExpressionTree l, ExpressionTree r)
+	operation = "*";
+
+	protected ExpressionTree left, right;
+	
+	public Times(ExpressionTree l, ExpressionTree r)
 	{
-		super(l, r);
+		left = l;
+		right = r;
 	}
+
+	public int evaluate()
+	{
+		return left * right;
+	}
+
+}
+
+class Divide extends ExpressionTree
+{
+	operation = "/";
+
+	protected ExpressionTree left, right;
+
+	public Divide(ExpressionTree l, ExpressionTree r)
+	{	
+		left = l;
+		right = r;
+	}
+
+	public int evaluate()
+	{
+		return left / right;
+	}
+
+}
+
+class Negation extends ExpressionTree
+{
+	operation = "neg";
+
+	protected ExpressionTree left, right;
+
+
 
 
